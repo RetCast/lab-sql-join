@@ -18,10 +18,11 @@ ON a.address_id = s.address_id
 ORDER BY 1;
 
 #3. Display the total amount rung up by each staff member in August 2005.
-SELECT CONCAT(first_name, ' ', last_name) AS `name`, COUNT(amount) AS amount_rung_up
+SELECT CONCAT(first_name, ' ', last_name) AS `name`, SUM(amount) AS amount_rung_up
 FROM payment AS p
 INNER JOIN staff as s
 ON p.staff_id = s.staff_id
+WHERE DATE_FORMAT(payment_date, '%Y-%m') = '2005-08'
 GROUP BY `name`
 ORDER BY 2 DESC;
 
@@ -37,7 +38,7 @@ ORDER BY 2 DESC;
 
 /* 5. Using the payment and the customer tables as well as the JOIN command, list the total 
 amount paid by each customer. List the customers alphabetically by their last names.*/
-SELECT last_name, COUNT(amount) AS amount_paid
+SELECT last_name, SUM(amount) AS amount_paid
 FROM payment AS p
 INNER JOIN customer AS c
 ON p.customer_id = c.customer_id
